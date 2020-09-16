@@ -1,0 +1,25 @@
+\documentclass{article}
+
+\usepackage{listings}
+
+\title{Práctica 1 de Desarrollo de Software para Juegos}
+\author{Adolfo Hristo David Roque Gámez}
+
+\begin{document}
+\maketitle
+\section{Desarrollo}
+\subsection{Manejo de los límites de Escenario}
+El manejo de los límites se realiza en dos ocasiones: una para el jugador y otra para todos los enemigos.
+
+Para el jugador, el fragmento de código mostrado en \ref{lst:ex1} se encarga de mantenerlo en la pantalla. Las coordenadas del jugador están ubicadas en la esquina izquierda del jugador, por eso verifica si es menor o igual a 0 o si es mayor a 736.
+
+A pesar de que el ancho de la pantalla es de 800, el jugador verifica si es mayor de 736 porque está tomando en cuenta el ancho del jugador (64).
+
+\begin{lstlisting}[caption={Código que se encarga de controlar el límite del jugador},label=lst:ex1]
+playerX += playerX_change
+if playerX <= 0:
+    playerX = 0
+elif playerX >= 736:
+    playerX = 736
+\end{lstlisting}
+\end{document}
