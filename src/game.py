@@ -1,7 +1,9 @@
 import pygame
 from actors.actor import Actor
+from components.component import Component
 
 class Game:
+    '''Executes the game loop'''
     def initialize(self):
         pygame.init()
         self.screen = pygame.display.set_mode((500,500))
