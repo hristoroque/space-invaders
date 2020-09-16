@@ -1,3 +1,4 @@
 /env/*
 docs/*
 !docs/*.tex
+__pycache__/
