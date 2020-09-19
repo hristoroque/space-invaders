@@ -1,3 +1,4 @@
+import pygame
 from lib.vectors import Vector2
 from lib.components.image_components import SpriteComponent
 from .actor import Actor
@@ -14,7 +15,8 @@ class Ship(Actor):
         self.position = Vector2(self.game.width / 2, self.game.height/ 2)
         self.velocity = 250
         sprite = SpriteComponent(self, 1)
-        sprite.set_image(self.game.get_image('ship.png'))
+        image = self.game.get_image('ship.png')
+        sprite.set_image(pygame.transform.scale(image,(32, 32)))
         self.add_component(sprite)
 
     def process_input(self, keyboard):
