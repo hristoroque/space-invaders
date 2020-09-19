@@ -3,6 +3,7 @@ from lib.vectors import Vector2
 from lib.components.image_components import SpriteComponent
 from .actor import Actor
 from .fire import Fire
+from .powerups import MultipleShootStrategy
 
 class Ship(Actor):
     def __init__(self, game):
@@ -12,6 +13,7 @@ class Ship(Actor):
         self.can_fire = True
         self.reload_time = 100
         self.curr_time = 0
+        self.shooting_strategy = MultipleShootStrategy()
         self.position = Vector2(self.game.width / 2, self.game.height - 42)
         self.velocity = 250
         sprite = SpriteComponent(self, 1)
@@ -37,6 +39,4 @@ class Ship(Actor):
             self.can_fire = True
 
     def shoot(self):
-        fire = Fire(self.game)
-        fire.position = Vector2(self.position.x, self.position.y)
-        self.game.add_actor(fire)
+        self.shooting_strategy.shoot(self)
