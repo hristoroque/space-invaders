@@ -1,6 +1,7 @@
 import pygame
 from os import path
 from lib.actors.actor import Actor
+from lib.actors.player import Player
 from lib.components.base import Component
 from lib.components.image_components import SpriteComponent
 
@@ -22,10 +23,12 @@ class Game:
         self.load_data()
 
     def load_data(self):
-        bg = Actor(self)
+        bg = Player(self)
         sprite = SpriteComponent(bg, 1)
         #pygame.image.load()
-        sprite.set_image(pygame.image.load(path.join(assets,'player.png')))
+        bgimage = pygame.image.load(path.join(assets,'fondo.png'))
+
+        sprite.set_image(pygame.transform.scale(bgimage, (500,1000)))
         self.add_actor(bg)
         self.add_sprite(sprite)
 
