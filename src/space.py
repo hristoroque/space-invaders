@@ -1,4 +1,4 @@
-from game import Game
+from lib.game import Game
 
 game = Game()
 game.initialize()
