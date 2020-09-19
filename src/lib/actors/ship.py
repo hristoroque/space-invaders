@@ -12,7 +12,7 @@ class Ship(Actor):
         self.can_fire = True
         self.reload_time = 100
         self.curr_time = 0
-        self.position = Vector2(self.game.width / 2, self.game.height/ 2)
+        self.position = Vector2(self.game.width / 2, self.game.height - 42)
         self.velocity = 250
         sprite = SpriteComponent(self, 1)
         image = self.game.get_image('ship.png')

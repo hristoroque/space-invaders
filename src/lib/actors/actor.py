@@ -46,3 +46,8 @@ class Actor:
             math.cos(self.rotation),
             -math.sin(self.rotation)
             )
+
+    def destroy(self):
+        self.state = Actor.State.DEATH
+        for component in self.components:
+            component.destroy()

@@ -18,3 +18,6 @@ class SpriteComponent(Component):
             self.actor.position.x - self.width/2,
             self.actor.position.y - self.height/2
         ))
+
+    def destroy(self):
+        self.actor.game.remove_sprite(self)

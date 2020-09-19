@@ -83,6 +83,7 @@ class Game:
         for actor in self.pending_actors:
             self.actors.append(actor)
 
+        self.actors = [actor for actor in self.actors if actor.state != Actor.State.DEATH]
         self.pending_actors.clear()
 
     def render(self):
@@ -118,3 +119,6 @@ class Game:
             index+=1
 
         self.sprites.insert(index, sprite_component)
+
+    def remove_sprite(self, sprite_component):
+        self.sprites = [sprite for sprite in self.sprites if sprite != sprite_component]

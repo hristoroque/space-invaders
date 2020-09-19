@@ -16,3 +16,6 @@ class Fire(Actor):
 
     def update_actor(self, delta_time):
         self.position.y -= delta_time * 100
+
+        if self.position.y <= self.game.height/2:
+            self.destroy()
