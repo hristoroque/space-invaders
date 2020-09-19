@@ -2,6 +2,7 @@ import pygame
 from os import path
 from lib.actors.actor import Actor
 from lib.actors.ship import Ship
+from lib.actors.enemy import Enemy
 from lib.actors.bg import BackGround
 from lib.components.base import Component
 from lib.components.image_components import SpriteComponent
@@ -31,6 +32,8 @@ class Game:
     def load_data(self):
         ship = Ship(self)
         bg = BackGround(self)
+        enemy = Enemy(self)
+        self.add_actor(enemy)
         self.add_actor(ship)
         self.add_actor(bg)
 

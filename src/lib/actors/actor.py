@@ -1,4 +1,5 @@
 import pygame
+import math
 from pygame import Rect
 from lib.vectors import Vector2
 from enum import Enum
@@ -39,3 +40,9 @@ class Actor:
 
     def remove_component(self, component):
         pass
+
+    def get_forward(self):
+        return Vector2(
+            math.cos(self.rotation),
+            -math.sin(self.rotation)
+            )
