@@ -6,7 +6,8 @@ from enum import Enum
 class Actor:
     class State(Enum):
         ACTIVE = 0
-        DEATH = 1
+        PAUSE = 1
+        DEATH = 2
 
     def __init__(self, game):
         self.position = Vector2(0, 0)
@@ -14,6 +15,10 @@ class Actor:
         self.rotation = 0
         self.components = []
         self.game = game
+        self.state = Actor.State.ACTIVE
+
+    def start(self):
+        pass
 
     def process_input(self, keyboard):
         pass
@@ -23,7 +28,8 @@ class Actor:
         self.update_actor(delta_time)
 
     def update_components(self, delta_time):
-        pass
+        for component in self.components:
+            component.update(delta_time)
 
     def update_actor(self, delta_time):
         pass
@@ -32,7 +38,4 @@ class Actor:
         self.components.append(component)
 
     def remove_component(self, component):
-        pass
-
-    def render(self, screen):
         pass
