@@ -2,10 +2,11 @@ import pygame
 from os import path
 from lib.actors.actor import Actor
 from lib.actors.player import Player
+from lib.actors.ship import Ship
 from lib.components.base import Component
 from lib.components.image_components import SpriteComponent
 
-assets = 'assets/'
+assets = 'assets'
 
 class Game:
     def __init__(self):
@@ -13,11 +14,14 @@ class Game:
         self.pending_actors = []
         self.updating_actors = False
         self.sprites = []
+        self.horizontalAxis = 0
+        self.width = 500
+        self.height = 500
 
     '''Executes the game loop'''
     def initialize(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((500,500))
+        self.screen = pygame.display.set_mode((self.width,self.height))
         self.ticksCount = 0
         self.is_running = True
         self.load_data()
@@ -25,12 +29,20 @@ class Game:
     def load_data(self):
         bg = Player(self)
         sprite = SpriteComponent(bg, 1)
-        #pygame.image.load()
         bgimage = pygame.image.load(path.join(assets,'fondo.png'))
 
         sprite.set_image(pygame.transform.scale(bgimage, (500,1000)))
         self.add_actor(bg)
+        bg.add_component(sprite)
         self.add_sprite(sprite)
+
+        ship = Ship(self)
+        ship_sprite = SpriteComponent(ship, 2)
+        ship_image = pygame.image.load(path.join(assets,'ship.png')).convert_alpha()
+        ship_sprite.set_image(pygame.transform.scale(ship_image,(50,50)))
+        ship.add_component(ship_sprite)
+        self.add_actor(ship)
+        self.add_sprite(ship_sprite)
 
     def shutdown(self):
         print("Shutting down game. Good Bye!")
@@ -56,6 +68,8 @@ class Game:
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     self.horizontalAxis = 0
+        for actor in self.actors:
+            actor.process_input(self.horizontalAxis)
     
     def update(self):
         delta_time = (pygame.time.get_ticks() - self.ticksCount) / 1000
