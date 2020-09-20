@@ -6,6 +6,7 @@ class MoveComponent(Component):
         super().__init__(actor, update_order)
 
         self.forward_speed = 0
+        self.side_speed = 0
         self.angular_speed = 0
 
     def update(self, delta_time):
@@ -15,4 +16,8 @@ class MoveComponent(Component):
         if self.forward_speed != 0:
             self.actor.position = self.actor.position.add(
                 self.actor.get_forward().times(self.forward_speed * delta_time)
+            )
+        if self.side_speed != 0:
+            self.actor.position = self.actor.position.add(
+                Vector2(self.side_speed,0)
             )

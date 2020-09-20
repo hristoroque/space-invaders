@@ -3,6 +3,7 @@ from os import path
 from lib.actors.actor import Actor
 from lib.actors.ship import Ship
 from lib.actors.enemy import Enemy
+from lib.actors.boss import Boss
 from lib.actors.bg import BackGround
 from lib.components.base import Component
 from lib.components.image_components import SpriteComponent
@@ -30,12 +31,14 @@ class Game:
         self.load_data()
 
     def load_data(self):
-        ship = Ship(self)
+        self.ship = Ship(self)
         bg = BackGround(self)
         enemy = Enemy(self)
+        boss = Boss(self)
         self.add_actor(enemy)
-        self.add_actor(ship)
+        self.add_actor(self.ship)
         self.add_actor(bg)
+        self.add_actor(boss)
 
     def shutdown(self):
         print("Shutting down game. Good Bye!")
