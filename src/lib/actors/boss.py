@@ -2,6 +2,7 @@ import pygame
 from .actor import Actor
 import math
 from lib.components.image_components import SpriteComponent
+from lib.components.image_components import LifeRectComponent
 from lib.components.move_components import MoveComponent
 from lib.vectors import Vector2
 from .fire_boss import FireBoss
@@ -16,9 +17,16 @@ class Boss(Actor):
         self.speed = 6.0
         self.screen = game.screen
         image = self.game.get_image('boss01.png')
+        
+        spriteLife = LifeRectComponent(self, 1)
+        spriteLife.set_offset(75, 60)
+        spriteLife.lifes = 5 #ccambiando la candidad de vidas (ejemplo)
+        self.add_component(spriteLife)
+
         sprite = SpriteComponent(self, 1)
         sprite.set_image(image)
         self.add_component(sprite)
+
         self.move_component = MoveComponent(self)
         self.move_component.forward_speed = 0
         self.move_component.angular_speed = 0
