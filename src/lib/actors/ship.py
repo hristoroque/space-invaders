@@ -1,8 +1,9 @@
 import pygame
+
 from lib.vectors import Vector2
 from lib.components.image_components import SpriteComponent
+from lib.components.move_components import InputComponent, SpaceInvaderMovement
 from .actor import Actor
-from .fire import Fire
 from .powerups import MultipleShootStrategy
 
 class Ship(Actor):
@@ -11,32 +12,41 @@ class Ship(Actor):
         self.dir = 0
         self.firing = False
         self.can_fire = True
-        self.reload_time = 100
+        self.reload_time = 10
         self.curr_time = 0
         self.shooting_strategy = MultipleShootStrategy()
         self.position = Vector2(self.game.width / 2, self.game.height - 42)
         self.velocity = 250
-        sprite = SpriteComponent(self, 1)
-        image = self.game.get_image('ship.png')
-        sprite.set_image(pygame.transform.scale(image,(32, 32)))
+        sprite = SpriteComponent(self, 3)
+        image = self.game.get_image('player.png')
+        sprite.set_image(pygame.transform.scale(image,(64, 64)))
         self.add_component(sprite)
+        self.input_component: InputComponent = InputComponent(self)
+        self.add_component(self.input_component)
 
-    def process_input(self, keyboard):
-        self.dir = keyboard['horizontal_axis']
-        self.firing = keyboard['fire_button']
+    def process_input_actor(self, input_state):
+        pass
 
     def update_actor(self, delta_time):
-        self.position.x += self.dir * delta_time * self.velocity
-        if self.firing and self.can_fire:
-            self.shoot()
-            self.can_fire = False
-            self.curr_time = 0
-        
-        if not self.can_fire:
-            self.curr_time += 1
-
-        if self.curr_time > self.reload_time:
-            self.can_fire = True
+        pass
 
     def shoot(self):
         self.shooting_strategy.shoot(self)
+
+class EnemyShip(Actor):
+    def __init__(self, game):
+        super().__init__(game)
+        self.position = Vector2(self.game.width/2, self.game.height/2)
+        self.movement_component = SpaceInvaderMovement(self)
+        self.sprite = SpriteComponent(self, 4)
+        image = self.game.get_image('ufo.png')
+        self.sprite.set_image(image)
+        
+        self.add_component(self.sprite)
+        self.add_component(self.movement_component)
+
+    def process_input_actor(self, input_state):
+        pass
+
+    def update_actor(self, delta_time):
+        pass

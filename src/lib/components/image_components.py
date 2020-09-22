@@ -9,6 +9,12 @@ class SpriteComponent(Component):
         self.width = 0
         self.actor.game.add_sprite(self)
 
+    def process_input(self, input_state):
+        pass
+
+    def update(self, delta_time):
+        pass
+
     def set_image(self, image):
         self.image = image
         self.width, self.height = image.get_rect().size
