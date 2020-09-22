@@ -6,6 +6,7 @@ from pygame import Rect
 from lib.vectors import Vector2
 from lib.components.base import Component
 
+
 class Actor:
     class State(Enum):
         ACTIVE = 0
@@ -52,9 +53,12 @@ class Actor:
         return Vector2(
             math.cos(self.rotation),
             -math.sin(self.rotation)
-            )
+        )
 
     def destroy(self):
         self.state = Actor.State.DEATH
         for component in self.components:
             component.destroy()
+
+    def on_collide(self, actor):
+        pass

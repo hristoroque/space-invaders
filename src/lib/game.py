@@ -17,6 +17,7 @@ class Game:
         self.pending_actors = []
         self.updating_actors = False
         self.sprites = []
+        self.colliders = []
         self.horizontalAxis = 0
         self.width = 500
         self.height = 500
@@ -115,3 +116,9 @@ class Game:
     def remove_sprite(self, sprite_component):
         self.sprites = [
             sprite for sprite in self.sprites if sprite != sprite_component]
+
+    def add_collider(self, collider):
+        self.colliders.append(collider)
+
+    def remove_collider(self, collider):
+        self.colliders.remove(collider)
