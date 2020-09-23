@@ -21,6 +21,7 @@ class Actor:
         self.components: List[Component] = []
         self.game = game
         self.state = Actor.State.ACTIVE
+        self.start()
 
     def start(self):
         pass

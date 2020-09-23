@@ -33,3 +33,4 @@ class Fire(Actor):
         if actor.tag == 'enemy':
             actor.destroy()
             self.destroy()
+            self.game.get_sound('explosion.wav').play()

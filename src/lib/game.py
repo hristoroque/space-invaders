@@ -6,6 +6,7 @@ from lib.actors.powerups import PowerUp
 from lib.actors.actor import Actor
 from lib.actors.ship import Ship, EnemyShip, EnemyShips
 from lib.actors.enemy import Enemy
+from lib.actors.gameover import GameOver
 from lib.actors.boss import Boss
 from lib.actors.bg import BackGround
 from lib.components.base import Component
@@ -27,6 +28,8 @@ class Game:
         self.fire_button = False
         self.images = {}
         self.sounds = {}
+        self.is_paused = True
+        self.ui_elements = []
 
     '''Executes the game loop'''
 
@@ -36,6 +39,8 @@ class Game:
         self.ticksCount = 0
         self.is_running = True
         self.load_data()
+        self.is_paused = False
+        self.font = pygame.font.Font('freesansbold.ttf', 32)
 
     def load_data(self):
         self.ship = Ship(self)
@@ -43,6 +48,9 @@ class Game:
         boss = Boss(self)
         powerup = PowerUp(self)
         enemies = EnemyShips(self)
+        game_over = GameOver(self)
+
+        self.add_actor(game_over)
         self.add_actor(powerup)
         self.add_actor(enemies)
         self.add_actor(self.ship)
@@ -75,11 +83,12 @@ class Game:
     def update(self):
         pygame.time.delay((self.ticksCount + 16)-pygame.time.get_ticks())
 
-        delta_time = (pygame.time.get_ticks() - self.ticksCount) / 1000
-
-        #delta_time = 0
-        if delta_time > 0.05:
-            delta_time = 0.05
+        if not self.is_paused:
+            delta_time = (pygame.time.get_ticks() - self.ticksCount) / 1000
+            if delta_time > 0.05:
+                delta_time = 0.05
+        else:
+            delta_time = 0
 
         self.ticksCount = pygame.time.get_ticks()
 
@@ -99,6 +108,8 @@ class Game:
         self.screen.fill((50, 0, 0))
         for sprite in self.sprites:
             sprite.draw(self.screen)
+        for ui_element in self.ui_elements:
+            ui_element.draw(self.screen)
         pygame.display.update()
 
     def add_actor(self, actor):
@@ -149,3 +160,12 @@ class Game:
             self.colliders.remove(collider)
         except ValueError:
             pass
+
+    def resume(self):
+        self.is_paused = False
+
+    def pause(self):
+        self.is_paused = True
+
+    def add_ui(self, ui_element):
+        self.ui_elements.append(ui_element)
