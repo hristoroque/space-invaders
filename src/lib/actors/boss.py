@@ -22,7 +22,7 @@ class Boss(Actor):
 
         self.spriteLife = LifeRectComponent(self, 1)
         self.spriteLife.set_offset(75, 60)
-        self.spriteLife.lifes = 10  # ccambiando la candidad de vidas (ejemplo)
+        self.spriteLife.lifes = self.lifes
         self.add_component(self.spriteLife)
 
         sprite = SpriteComponent(self, 1)
@@ -60,4 +60,7 @@ class Boss(Actor):
     def on_collide(self, actor):
         if actor.tag == 'player_fire':
             actor.destroy()
-            self.spriteLife.lifes -= 1
+            self.lifes -= 1
+            self.spriteLife.lifes = self.lifes
+            if(self.lifes == 0):
+                self.destroy()
