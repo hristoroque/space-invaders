@@ -4,7 +4,7 @@ from pygame import mixer
 from os import path
 from lib.actors.powerups import PowerUp
 from lib.actors.actor import Actor
-from lib.actors.ship import Ship, EnemyShip
+from lib.actors.ship import Ship, EnemyShip, EnemyShips
 from lib.actors.enemy import Enemy
 from lib.actors.boss import Boss
 from lib.actors.bg import BackGround
@@ -41,10 +41,10 @@ class Game:
         self.ship = Ship(self)
         bg = BackGround(self)
         boss = Boss(self)
-        enemy = EnemyShip(self)
         powerup = PowerUp(self)
+        enemies = EnemyShips(self)
         self.add_actor(powerup)
-        self.add_actor(enemy)
+        self.add_actor(enemies)
         self.add_actor(self.ship)
         self.add_actor(bg)
         self.add_actor(boss)
@@ -73,7 +73,14 @@ class Game:
             actor.process_input(input_state)
 
     def update(self):
+        pygame.time.delay((self.ticksCount + 16)-pygame.time.get_ticks())
+
         delta_time = (pygame.time.get_ticks() - self.ticksCount) / 1000
+
+        #delta_time = 0
+        if delta_time > 0.05:
+            delta_time = 0.05
+
         self.ticksCount = pygame.time.get_ticks()
 
         self.updating_actors = True

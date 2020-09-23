@@ -32,3 +32,4 @@ class Fire(Actor):
     def on_collide(self, actor):
         if actor.tag == 'enemy':
             actor.destroy()
+            self.destroy()

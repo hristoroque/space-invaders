@@ -75,3 +75,20 @@ class EnemyShip(Actor):
 
     def update_actor(self, delta_time):
         pass
+
+
+class EnemyShips(Actor):
+    def __init__(self, game):
+        super().__init__(game)
+
+        self.cols = 9
+        self.rows = 4
+
+        cell_size = 50
+
+        for i in range(self.cols):
+            for j in range(self.rows):
+                space_invader = EnemyShip(game)
+                space_invader.position = Vector2(
+                    cell_size + i*cell_size, cell_size + j*cell_size)
+                game.add_actor(space_invader)
