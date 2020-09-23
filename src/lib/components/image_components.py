@@ -30,9 +30,11 @@ class SpriteComponent(Component):
         self.actor.game.remove_sprite(self)
 
 class LifeRectComponent(Component):
-    def __init__(self, actor, draw_order = 1):
+    def __init__(self, actor, max_life, draw_order = 1):
         super().__init__(actor)
         self.draw_order = draw_order
+        self.max_life = max_life
+        self.step_life = 150 / max_life
         self.image = None
         self.height = 0
         self.width = 0
@@ -56,8 +58,8 @@ class LifeRectComponent(Component):
         self.width, self.height = image.get_rect().size
 
     def draw(self, screen):
-        pygame.draw.rect(screen,(255,0,0),(self.actor.position.x - self.offset_x, self.actor.position.y - self.offset_y - 30, 15 * 10, 10))
-        pygame.draw.rect(screen,(0,255,0),(self.actor.position.x - self.offset_x, self.actor.position.y - self.offset_y - 30, 15 * self.lifes, 10))
+        pygame.draw.rect(screen,(255,0,0),(self.actor.position.x - self.offset_x, self.actor.position.y - self.offset_y - 30, self.step_life * self.max_life, 10))
+        pygame.draw.rect(screen,(0,255,0),(self.actor.position.x - self.offset_x, self.actor.position.y - self.offset_y - 30, self.step_life * self.lifes, 10))
 
     def destroy(self):
         self.actor.game.remove_sprite(self)

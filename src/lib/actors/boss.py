@@ -12,7 +12,7 @@ from .fire_boss import FireBoss
 class Boss(Actor):
     def __init__(self, game):
         super().__init__(game)
-        self.lifes = 10
+        self.lifes = 100
         self.timer_shoot = 0
         self.position = Vector2(game.width/2, 100)
         self.rotation = math.pi/2
@@ -20,7 +20,7 @@ class Boss(Actor):
         self.screen = game.screen
         image = self.game.get_image('boss01.png')
 
-        self.spriteLife = LifeRectComponent(self, 1)
+        self.spriteLife = LifeRectComponent(self, self.lifes, 1)
         self.spriteLife.set_offset(75, 60)
         self.spriteLife.lifes = self.lifes
         self.add_component(self.spriteLife)
