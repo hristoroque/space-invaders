@@ -24,7 +24,7 @@ class MoveComponent(Component):
             )
         if self.side_speed != 0:
             self.actor.position = self.actor.position.add(
-                Vector2(self.side_speed, 0)
+                Vector2(self.side_speed * delta_time * 50, 0)
             )
 
     def destroy(self):
