@@ -145,4 +145,7 @@ class Game:
         self.colliders.append(collider)
 
     def remove_collider(self, collider):
-        self.colliders.remove(collider)
+        try:
+            self.colliders.remove(collider)
+        except ValueError:
+            pass
