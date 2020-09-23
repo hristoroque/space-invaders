@@ -42,7 +42,7 @@ class Boss(Actor):
     def update(self, delta_time):
         super(Boss, self).update(delta_time)
         if(self.timer_shoot == 0):
-            self.timer_shoot = 800
+            self.timer_shoot = 300
             self.shoot()
         self.timer_shoot = self.timer_shoot - 1
 
