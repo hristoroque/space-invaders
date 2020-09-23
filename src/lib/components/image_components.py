@@ -41,6 +41,12 @@ class LifeRectComponent(Component):
         self.offset_y = 0
         self.lifes = 10
     
+    def process_input(self, input_state):
+        pass
+
+    def update(self, delta_time):
+        pass
+
     def set_offset(self, x, y):
         self.offset_x = x
         self.offset_y = y
