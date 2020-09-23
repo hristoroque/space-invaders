@@ -27,7 +27,8 @@ class Fire(Actor):
 
         if self.position.y < -self.sprite.height:
             self.destroy()
-
+            
     def on_collide(self, actor):
         if actor.tag == 'enemy':
             actor.destroy()
+            
