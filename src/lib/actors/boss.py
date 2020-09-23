@@ -22,7 +22,7 @@ class Boss(Actor):
 
         self.spriteLife = LifeRectComponent(self, 1)
         self.spriteLife.set_offset(75, 60)
-        self.spriteLife.lifes = 5  # ccambiando la candidad de vidas (ejemplo)
+        self.spriteLife.lifes = 10  # ccambiando la candidad de vidas (ejemplo)
         self.add_component(self.spriteLife)
 
         sprite = SpriteComponent(self, 1)
@@ -36,7 +36,7 @@ class Boss(Actor):
         self.add_component(self.move_component)
 
         self.collider = CircleCollider(self)
-        self.collider.radius = 40
+        self.collider.radius = 70
         self.add_component(self.collider)
 
     def update(self, delta_time):
