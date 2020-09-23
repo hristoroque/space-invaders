@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 
 from lib.vectors import Vector2
 from lib.components.image_components import SpriteComponent
@@ -34,6 +35,7 @@ class Ship(Actor):
         if input_state[pygame.K_SPACE] and not self.firing:
             self.firing = True
             self.shooting_strategy.shoot(self)
+            self.game.get_sound('laser.wav').play()
 
     def update_actor(self, delta_time):
         # print(self.curr_time)

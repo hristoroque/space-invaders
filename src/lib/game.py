@@ -1,4 +1,6 @@
 import pygame
+from pygame import mixer
+
 from os import path
 from lib.actors.powerups import PowerUp
 from lib.actors.actor import Actor
@@ -24,6 +26,7 @@ class Game:
         self.height = 500
         self.fire_button = False
         self.images = {}
+        self.sounds = {}
 
     '''Executes the game loop'''
 
@@ -45,6 +48,9 @@ class Game:
         self.add_actor(self.ship)
         self.add_actor(bg)
         self.add_actor(boss)
+        mixer.music.load("assets/background.wav")
+        mixer.music.set_volume(0.2)
+        mixer.music.play(-1)
 
     def shutdown(self):
         print("Shutting down game. Good Bye!")
@@ -104,6 +110,14 @@ class Game:
             image = pygame.image.load(path.join(assets, filename))
             self.images[filename] = image
             return self.images[filename]
+
+    def get_sound(self, filename):
+        if filename in self.sounds:
+            return self.sounds[filename]
+        else:
+            sound = pygame.mixer.Sound(path.join(assets, filename))
+            self.sounds[filename] = sound
+            return self.sounds[filename]
 
     def add_sprite(self, sprite_component):
         draw_order = sprite_component.draw_order
