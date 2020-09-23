@@ -1,3 +1,4 @@
+import pygame
 from .base import Component
 from lib.vectors import Vector2
 
@@ -27,7 +28,7 @@ def intersect(circle_a: CircleCollider, circle_b: CircleCollider):
     diff: Vector2 = circle_a.get_center() - circle_b.get_center()
     distance = diff.length_squared()
 
-    radiiSqr = circle_a.radius + circle_a.radius
-    radiiSqr *= 2
+    radiiSqr = circle_a.radius + circle_b.radius
+    radiiSqr *= radiiSqr
 
     return distance <= radiiSqr

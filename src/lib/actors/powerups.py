@@ -12,8 +12,8 @@ import math
 class PowerUp(Actor):
     def __init__(self, game):
         super().__init__(game)
-
-        self.position = Vector2(self.game.width/2, self.game.height - 42)
+        self.tag = 'powerup'
+        self.position = Vector2(self.game.width - 10, self.game.height - 42)
         self.rotation = math.radians(-90)
 
         sprite = SpriteComponent(self, 5)
@@ -39,6 +39,7 @@ class SimpleShootStrategy(ShootingStrategy):
     def shoot(self, actor):
         game = actor.game
         fire = Fire(game)
+        fire.rotation = math.radians(90)
         fire.position = Vector2(actor.position.x, actor.position.y)
         game.add_actor(fire)
 

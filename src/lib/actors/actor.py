@@ -14,6 +14,7 @@ class Actor:
         DEATH = 2
 
     def __init__(self, game):
+        self.tag = 'gameobject'
         self.position = Vector2(0, 0)
         self.scale = 1
         self.rotation = 0
