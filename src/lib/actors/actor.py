@@ -1,8 +1,11 @@
+from enum import Enum
+from typing import List
 import pygame
 import math
 from pygame import Rect
 from lib.vectors import Vector2
-from enum import Enum
+from lib.components.base import Component
+
 
 class Actor:
     class State(Enum):
@@ -11,17 +14,23 @@ class Actor:
         DEATH = 2
 
     def __init__(self, game):
+        self.tag = 'gameobject'
         self.position = Vector2(0, 0)
         self.scale = 1
         self.rotation = 0
-        self.components = []
+        self.components: List[Component] = []
         self.game = game
         self.state = Actor.State.ACTIVE
 
     def start(self):
         pass
 
-    def process_input(self, keyboard):
+    def process_input(self, input_state):
+        for component in self.components:
+            component.process_input(input_state)
+        self.process_input_actor(input_state)
+
+    def process_input_actor(self, input_state):
         pass
 
     def update(self, delta_time):
@@ -45,9 +54,12 @@ class Actor:
         return Vector2(
             math.cos(self.rotation),
             -math.sin(self.rotation)
-            )
+        )
 
     def destroy(self):
         self.state = Actor.State.DEATH
         for component in self.components:
             component.destroy()
+
+    def on_collide(self, actor):
+        pass

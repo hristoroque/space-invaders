@@ -10,6 +10,12 @@ class SpriteComponent(Component):
         self.width = 0
         self.actor.game.add_sprite(self)
 
+    def process_input(self, input_state):
+        pass
+
+    def update(self, delta_time):
+        pass
+
     def set_image(self, image):
         self.image = image
         self.width, self.height = image.get_rect().size
@@ -22,7 +28,6 @@ class SpriteComponent(Component):
 
     def destroy(self):
         self.actor.game.remove_sprite(self)
-
 
 class LifeRectComponent(Component):
     def __init__(self, actor, draw_order = 1):
@@ -50,3 +55,4 @@ class LifeRectComponent(Component):
 
     def destroy(self):
         self.actor.game.remove_sprite(self)
+
