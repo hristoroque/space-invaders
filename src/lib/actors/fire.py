@@ -8,6 +8,7 @@ from lib.components.colliders import CircleCollider
 class Fire(Actor):
     def __init__(self, game):
         super().__init__(game)
+        self.tag = 'player_fire'
         self.dir = 0
         self.position = Vector2(0, 0)
         self.velocity = 300
@@ -27,8 +28,7 @@ class Fire(Actor):
 
         if self.position.y < -self.sprite.height:
             self.destroy()
-            
+
     def on_collide(self, actor):
         if actor.tag == 'enemy':
             actor.destroy()
-            

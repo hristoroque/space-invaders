@@ -4,8 +4,10 @@ import math
 from lib.components.image_components import SpriteComponent
 from lib.components.image_components import LifeRectComponent
 from lib.components.move_components import MoveComponent
+from lib.components.colliders import CircleCollider
 from lib.vectors import Vector2
 from .fire_boss import FireBoss
+
 
 class Boss(Actor):
     def __init__(self, game):
@@ -17,11 +19,11 @@ class Boss(Actor):
         self.speed = 6.0
         self.screen = game.screen
         image = self.game.get_image('boss01.png')
-        
-        spriteLife = LifeRectComponent(self, 1)
-        spriteLife.set_offset(75, 60)
-        spriteLife.lifes = 5 #ccambiando la candidad de vidas (ejemplo)
-        self.add_component(spriteLife)
+
+        self.spriteLife = LifeRectComponent(self, 1)
+        self.spriteLife.set_offset(75, 60)
+        self.spriteLife.lifes = 5  # ccambiando la candidad de vidas (ejemplo)
+        self.add_component(self.spriteLife)
 
         sprite = SpriteComponent(self, 1)
         sprite.set_image(image)
@@ -33,23 +35,29 @@ class Boss(Actor):
         self.move_component.side_speed = -0.4
         self.add_component(self.move_component)
 
+        self.collider = CircleCollider(self)
+        self.collider.radius = 40
+        self.add_component(self.collider)
+
     def update(self, delta_time):
         super(Boss, self).update(delta_time)
         if(self.timer_shoot == 0):
             self.timer_shoot = 800
             self.shoot()
         self.timer_shoot = self.timer_shoot - 1
-        
-        
+
         if (self.position.x < 80):
             self.move_component.side_speed = 0.7
         elif (self.position.x > 420):
             self.move_component.side_speed = -0.7
-        
 
     def shoot(self):
         fire = FireBoss(self.game)
         fire.set_velocity_x((self.game.ship.position.x - self.position.x) / 3)
         fire.position = Vector2(self.position.x, self.position.y)
         self.game.add_actor(fire)
-            
+
+    def on_collide(self, actor):
+        if actor.tag == 'player_fire':
+            actor.destroy()
+            self.spriteLife.lifes -= 1
