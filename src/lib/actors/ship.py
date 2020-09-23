@@ -52,10 +52,10 @@ class Ship(Actor):
         if actor.tag == 'powerup':
             actor.destroy()
             self.shooting_strategy = MultipleShootStrategy()
-        
+
         if actor.tag == 'enemy_fire':
-            actor.destroy()
-            print("perdi el juego")
+            self.game.game_over.is_gameover = True
+            self.destroy()
 
 
 class EnemyShip(Actor):

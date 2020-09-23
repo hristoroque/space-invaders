@@ -48,9 +48,10 @@ class Game:
         boss = Boss(self)
         powerup = PowerUp(self)
         enemies = EnemyShips(self)
-        game_over = GameOver(self)
+        # TODO: Guardar los actores en una estructura
+        self.game_over = GameOver(self)
 
-        self.add_actor(game_over)
+        self.add_actor(self.game_over)
         self.add_actor(powerup)
         self.add_actor(enemies)
         self.add_actor(self.ship)
