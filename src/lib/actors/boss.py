@@ -12,7 +12,7 @@ from .fire_boss import FireBoss
 class Boss(Actor):
     def __init__(self, game):
         super().__init__(game)
-        self.lifes = 10
+        self.lifes = 100
         self.timer_shoot = 0
         self.position = Vector2(game.width/2, 100)
         self.rotation = math.pi/2
@@ -20,9 +20,9 @@ class Boss(Actor):
         self.screen = game.screen
         image = self.game.get_image('boss01.png')
 
-        self.spriteLife = LifeRectComponent(self, 1)
+        self.spriteLife = LifeRectComponent(self, self.lifes, 1)
         self.spriteLife.set_offset(75, 60)
-        self.spriteLife.lifes = 5  # ccambiando la candidad de vidas (ejemplo)
+        self.spriteLife.lifes = self.lifes
         self.add_component(self.spriteLife)
 
         sprite = SpriteComponent(self, 1)
@@ -36,13 +36,13 @@ class Boss(Actor):
         self.add_component(self.move_component)
 
         self.collider = CircleCollider(self)
-        self.collider.radius = 40
+        self.collider.radius = 70
         self.add_component(self.collider)
 
     def update(self, delta_time):
         super(Boss, self).update(delta_time)
         if(self.timer_shoot == 0):
-            self.timer_shoot = 800
+            self.timer_shoot = 200
             self.shoot()
         self.timer_shoot = self.timer_shoot - 1
 
@@ -60,4 +60,7 @@ class Boss(Actor):
     def on_collide(self, actor):
         if actor.tag == 'player_fire':
             actor.destroy()
-            self.spriteLife.lifes -= 1
+            self.lifes -= 1
+            self.spriteLife.lifes = self.lifes
+            if(self.lifes == 0):
+                self.destroy()
