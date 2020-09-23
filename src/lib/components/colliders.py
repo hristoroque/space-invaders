@@ -8,9 +8,6 @@ class CircleCollider(Component):
         super().__init__(actor)
         self.radius = 0
         self.actor.game.add_collider(self)
-        # TODO: eliminar draw_order y add_Sprite
-        self.draw_order = 99
-        self.actor.game.add_sprite(self)
 
     def process_input(self, input_state):
         pass
@@ -25,10 +22,6 @@ class CircleCollider(Component):
 
     def destroy(self):
         self.actor.game.remove_collider(self)
-    
-    # TODO: eliminar draw
-    def draw(self, screen):
-        pygame.draw.circle(screen,(0,255,0),(int(self.actor.position.x), int(self.actor.position.y)), self.radius, 1)
 
 
 def intersect(circle_a: CircleCollider, circle_b: CircleCollider):
